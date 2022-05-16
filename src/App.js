@@ -1,28 +1,22 @@
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import About from "./Pages/About";
-import Contact from "./Pages/Contact";
-import Home from "./Pages/Home";
-import Login from "./Pages/Login";
-import Services from "./Pages/Services";
-import { themeChange } from 'theme-change'
+import { publicRoute } from "./Routes/publicRoutes";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 import { useEffect } from "react";
-function App() {
-  
+import Navbar from '../src/components/Navbar'
 
-useEffect(() => {
-  themeChange(false)
-  // 👆 false parameter is required for react project
-}, [])
+function App() {
+  useEffect(() => {
+    AOS.init();
+  }, [])
   return (
 
     <Navbar>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/services" element={<Services />} />
+        {
+          publicRoute.map(({ path, Components }) => <Route path={path}
+            element={<Components />}></Route>)
+        }
       </Routes>
     </Navbar>
   );
